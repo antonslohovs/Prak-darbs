@@ -27,7 +27,7 @@ jobs:
         with:
           repository: 'mtararujs/python-greetings'
           path: 'api-dep'
-      - uses: ./.github/actions/deploy
+      - uses: ./.github/actions/deploy/node_deploy.yml
         with:
           port: 7001
           environment: 'DEV'

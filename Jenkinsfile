@@ -86,7 +86,7 @@ def deploy(String environment, int port){
     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
 
     bat "pm2 delete \"greetings-app-${environment}\"" & EXIT /B 0
-    bat "pm2 start -n \"books-${environment}\" index.js -- -- ${port}"
+    bat "pm2 start app.py --name \"greetings-app-${environment}\" -- --port ${port}"
 }
 
 def test(String test_set, String environment){

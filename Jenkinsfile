@@ -10,21 +10,21 @@ pipeline {
                 }
             }
         }
-        // stage('deploy-to-dev') {
-        //     steps {
-        //         script{
-        //             deploy("DEV", 7001)
-        //         }
-        //     }
-        // }
+        stage('deploy-to-dev') {
+            steps {
+                script{
+                    deploy("DEV", 7001)
+                }
+            }
+        }
 
-        // stage('tests-on-dev') {
-        //     steps {
-        //         script{
-        //             test("DEV")
-        //         }
-        //     }
-        // }
+        stage('tests-on-dev') {
+            steps {
+                script{
+                    test("DEV")
+                }
+            }
+        }
         stage('deploy-to-staging') {
             steps {
                 script{

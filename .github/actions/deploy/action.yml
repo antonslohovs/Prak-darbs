@@ -13,4 +13,4 @@ runs:
       run: echo Deployment to ${{ inputs.environment }} has started..
             pm2 delete greetings-app-${{ inputs.environment }} & EXIT /B 0
             pm2 start app.py --name greetings-app-${{ inputs.environment }} -- --port ${port}
-      shell: bash
+      shell: cmd

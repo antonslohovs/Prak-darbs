@@ -1,7 +1,6 @@
 pipeline {
     agent any
     triggers{ pollSCM('*/1 * * * *') }
-    bat "chcp 65001"
 
     stages {
         stage('install-pip-deps') {
@@ -22,7 +21,7 @@ pipeline {
         stage('tests-on-dev') {
             steps {
                 script{
-                    test("BOOKS", "DEV")
+                    test("DEV")
                 }
             }
         }
@@ -36,7 +35,7 @@ pipeline {
         stage('tests-on-staging') {
             steps {
                 script{
-                    test("BOOKS", "STG")
+                    test("STG")
                 }
             }
         }
@@ -50,7 +49,7 @@ pipeline {
         stage('tests-on-preprod') {
             steps {
                 script{
-                    test("BOOKS", "PRD")
+                    test("PREPRD")
                 }
             }
         }
@@ -64,7 +63,7 @@ pipeline {
         stage('tests-on-prod') {
             steps {
                 script{
-                    test("BOOKS", "PRD")
+                    test("PRD")
                 }
             }
         }
@@ -76,21 +75,21 @@ pipeline {
 def build(){
     echo "Installing all required depdendencies.."
     bat "dir C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Jenkins-konvejers"
-    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
+    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
     bat "pip install -r requirements.txt"
   //  bat "npm install -g pm2"
 }
 
 def deploy(String environment, int port){
     echo "Deployment to ${environment} has started.."
-    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
-
+    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
     bat "pm2 delete \"greetings-app-${environment}\"" & EXIT /B 0
     bat "pm2 start app.py --name \"greetings-app-${environment}\" -- --port ${port}"
 }
 
-def test(String test_set, String environment){
+def test(String environment){
     echo "Testing ${test_set} test set on ${environment} has started.."
-    git branch: 'main', poll: false, url: 'https://github.com/antonslohovs/course-js-api-framework_2.git'
-    bat "npm run ${test_set} ${test_set}_${environment}"
+    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/course-js-api-framework.git'
+    bat "npm install"
+    bat "npm run $npm run greetings greetings_${environment}"
 }

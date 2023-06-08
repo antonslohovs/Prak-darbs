@@ -1,0 +1,22 @@
+inputs:
+  test_set:
+    description: 'Specify test set to run'
+    default: 'BOOKS'
+  environment:
+    description: 'Testing environment'
+    default: 'DEV'
+runs:
+  using: "composite"
+  steps: 
+    - name: Install depedencies and run REST API integration tests
+      working-directory: api-tests
+      run: |
+        echo Testing ${{ inputs.test_set }} test set on ${{ inputs.environment }} has started..
+        npm install
+        npm run greetings greetings_${{ inputs.environment }}
+      shell: bash
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v3
+      with: 
+        name: test-report
+        path: api-tests/mochawesome-report

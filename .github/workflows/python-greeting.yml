@@ -13,15 +13,20 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
         with:
           repository: 'mtararujs/python-greetings'
-          path: 'api-tests'
+          path: 'api-deps'
 
   deploy-to-dev:
     runs-on: self-hosted
     needs: [install-pip-deps]
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'api-dep'
         with:
           clean: false
       - uses: ./.github/actions/deploy
@@ -47,6 +52,10 @@ jobs:
     needs: [test-on-dev]
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'api-dep'
         with:
           clean: false
       - uses: ./.github/actions/deploy
@@ -72,6 +81,10 @@ jobs:
     needs: [test-on-stg]
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'api-dep'
       - uses: ./.github/actions/deploy
         with:
           port: 7003
@@ -97,6 +110,10 @@ jobs:
     needs: [test-on-preprd]
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'api-dep'
       - uses: ./.github/actions/deploy
         with:
           port: 7004

@@ -1,0 +1,16 @@
+inputs:
+  port:
+    description: 'Specify port for node application to run'
+    default: 1010
+  environment:
+    description: 'Environment for sample node application'
+    default: 'DEV'
+runs:
+  using: "composite"
+  steps: 
+    - name: Print output
+      working-direktory: api-dep
+      run: echo Deployment to ${{ inputs.environment }} has started..
+            pm2 delete greetings-app-${{ inputs.environment }} & EXIT /B 0
+            pm2 start app.py --name greetings-app-${{ inputs.environment }} -- --port ${port}
+      shell: bash

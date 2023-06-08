@@ -2,6 +2,7 @@ runs:
   using: "composite"
   steps: 
     - name: Install depedencies
+      working-direktory: api-deps
       run: |
         echo Building of node application is starting..
         pip3 install -r requirements.txt

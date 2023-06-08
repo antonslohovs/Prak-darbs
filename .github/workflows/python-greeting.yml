@@ -1,0 +1,118 @@
+name: Prakt darbs
+
+on:
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  install-pip-deps:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'api-tests'
+
+  deploy-to-dev:
+    runs-on: self-hosted
+    needs: [install-pip-deps]
+    steps:
+      - uses: actions/checkout@v3.5.2
+        with:
+          clean: false
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7001
+          environment: 'DEV'
+
+  test-on-dev:
+    runs-on: self-hosted
+    needs: [deploy-to-dev]
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'api-tests'
+      - uses: ./.github/actions/test
+        with:
+          environment: 'DEV'
+
+  deploy-to-stg:
+    runs-on: self-hosted
+    needs: [test-on-dev]
+    steps:
+      - uses: actions/checkout@v3.5.2
+        with:
+          clean: false
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7002
+          environment: 'STG'
+
+  test-on-stg:
+    runs-on: self-hosted
+    needs: [deploy-to-stg]
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'api-tests'
+      - uses: ./.github/actions/test
+        with:
+          environment: 'STG'
+
+  deploy-to-preprd:
+    runs-on: self-hosted
+    needs: [test-on-stg]
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7003
+          environment: 'PREPRD'
+
+  test-on-preprd:
+    runs-on: self-hosted
+    needs: [deploy-to-preprd]
+    steps:
+      - uses: actions/checkout@v3.5.2
+        with:
+          clean: false
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'api-tests'
+      - uses: ./.github/actions/test
+        with:
+          environment: 'PREPRD'
+
+  deploy-to-prd:
+    runs-on: self-hosted
+    needs: [test-on-preprd]
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - uses: ./.github/actions/deploy
+        with:
+          port: 7004
+          environment: 'PRD'
+
+  test-on-prd:
+    runs-on: self-hosted
+    needs: [deploy-to-prd]
+    steps:
+      - uses: actions/checkout@v3.5.2
+        with:
+          clean: false
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'api-tests'
+      - uses: ./.github/actions/test
+        with:
+          environment: 'PRD'

@@ -76,7 +76,7 @@ def build(){
     echo "Installing all required depdendencies.."
     //bat "dir C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Jenkins-konvejers"
     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
-    bat "pip install -r requirements.txt"
+    bat "pip3 install -r requirements.txt"
 
 }
 

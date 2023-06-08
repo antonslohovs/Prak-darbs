@@ -83,7 +83,9 @@ def build(){
 
 def deploy(String environment, int port){
     echo "Deployment to ${environment} has started.."
-    bat "pm2 delete \"greetings-app-${environment}\"" & set "errorlevel=0"
+    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
+
+    bat "pm2 delete \"greetings-app-${environment}\"" & EXIT /B 0
     bat "pm2 start -n \"books-${environment}\" index.js -- -- ${port}"
 }
 

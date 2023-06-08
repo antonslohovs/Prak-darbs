@@ -71,13 +71,11 @@ pipeline {
     }
 }
 
-// for windows: bat "npm.."
-// for linux/macos: sh "npm .."
+
 
 def build(){
     echo "Installing all required depdendencies.."
     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
-    bat "ls"
   //  bat "npm install -g pm2"
 }
 

@@ -27,8 +27,6 @@ jobs:
         with:
           repository: 'mtararujs/python-greetings'
           path: 'api-dep'
-        with:
-          clean: false
       - uses: ./.github/actions/deploy
         with:
           port: 7001
@@ -56,8 +54,6 @@ jobs:
         with:
           repository: 'mtararujs/python-greetings'
           path: 'api-dep'
-        with:
-          clean: false
       - uses: ./.github/actions/deploy
         with:
           port: 7002
@@ -95,8 +91,6 @@ jobs:
     needs: [deploy-to-preprd]
     steps:
       - uses: actions/checkout@v3.5.2
-        with:
-          clean: false
       - uses: actions/checkout@v3.5.2
         with:
           repository: 'mtararujs/course-js-api-framework'
@@ -124,8 +118,6 @@ jobs:
     needs: [deploy-to-prd]
     steps:
       - uses: actions/checkout@v3.5.2
-        with:
-          clean: false
       - uses: actions/checkout@v3.5.2
         with:
           repository: 'mtararujs/course-js-api-framework'

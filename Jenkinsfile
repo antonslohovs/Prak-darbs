@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers{ pollSCM('*/1 * * * *') }
-    
+    bat "chcp 65001"
 
     stages {
         stage('install-pip-deps') {
@@ -74,7 +74,6 @@ pipeline {
 
 
 def build(){
-    bat "chcp 65001"
     echo "Installing all required depdendencies.."
     bat "dir C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Jenkins-konvejers"
     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'

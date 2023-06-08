@@ -76,6 +76,7 @@ pipeline {
 def build(){
     echo "Installing all required depdendencies.."
     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtararujs/python-greetings'
+    bat "dir"
   //  bat "npm install -g pm2"
 }
 
